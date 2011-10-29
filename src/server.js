@@ -18,7 +18,7 @@ http.createServer(function (request, response) {
   respLn();
   respLn("asked to copy", name, "...");
 
-	fs.readFile(fromPath + name, copyData);
+  fs.readFile(fromPath + name, copyData);
 
   function copyData(err, data) {
     err || fs.writeFile(toPath + name, data);
