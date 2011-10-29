@@ -12,18 +12,34 @@ var name;
 
 http.createServer(function (request, response) {
 
-  name = unescape(url.parse(request.url).pathname);
-  if (name.match("favicon")) { return; }
+  /************dispatch function**************/
+  (function(name) {
+    if (name.match("favicon")) { return; }
 
-  respLn();
-  respLn("asked to copy", name, "...");
+    //list files...
+    if (name == "/") {
+      listDirectory();
+      return;
+    }
 
-  fs.readFile(fromPath + name, copyData);
+    //...or copy
+    respLn("\nasked to copy", name, "...");
+    fs.readFile(fromPath + name, copyData);
+  })(unescape(url.parse(request.url).pathname));
+  /********************************************/
 
   function copyData(err, data) {
     err || fs.writeFile(toPath + name, data);
     respLn(err || ["copied", name, "to", toPath].join(" "));
     serveResponse(err);
+  }
+
+  function listDirectory(err, data) {
+    fs.readdir(toPath, function(err, files) {
+      respLn("\nchoose a file to copy...\n");
+      respLn(files.join('\n'));
+      serveResponse(err);
+    })
   }
 
   function serveResponse(err) {
@@ -34,7 +50,7 @@ http.createServer(function (request, response) {
     response.end();
   }
 
-  function respLn(content) {
+  function respLn(/*arguments*/) {
     respContent += ("\n" + [].slice.call(arguments).join(" "));
   }
 
