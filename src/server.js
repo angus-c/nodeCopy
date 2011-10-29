@@ -5,8 +5,8 @@ var fs = require('fs');
 var port = 8080;
 var respContent = "";
 
-var fromPath = '/Users/fred/Documents/'
-var toPath = '/Users/fred/Dropbox/Documents/'
+var fromPath = '/Users/fred/Documents'
+var toPath = '/Users/fred/Dropbox/Documents'
 var name;
 
 
