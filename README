@@ -1,0 +1,7 @@
+An early attempt at a file copier. Promise to make this more useful soon
+
+//usage
+localhost:8080/myFile.js
+localhost:8080/myDocument.doc
+
+set to and from paths in server.js
