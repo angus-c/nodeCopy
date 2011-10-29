@@ -24,7 +24,7 @@ http.createServer(function (request, response) {
 
     //...or copy
     respLn("\nasked to copy", name, "...");
-  	fs.readFile(fromPath + name, copyData);
+    fs.readFile(fromPath + name, copyData);
   })(unescape(url.parse(request.url).pathname));
   /********************************************/
 
