@@ -7,30 +7,28 @@ var respContent = "";
 
 var fromPath = '/Users/fred/Documents'
 var toPath = '/Users/fred/Dropbox/Documents'
-var name;
-
+var filename;
 
 http.createServer(function (request, response) {
 
   /************dispatch function**************/
-  (function(name) {
-    if (name.match("favicon")) { return; }
-
+  (function(pathname) {
+    if (pathname.match("favicon")) { return; }
     //list files...
-    if (name == "/") {
+    if (pathname == "/") {
       listDirectory();
       return;
     }
-
     //...or copy
-    respLn("\nasked to copy", name, "...");
-    fs.readFile(fromPath + name, copyData);
+    filename = pathname;
+    respLn("\nasked to copy", pathname, "...");
+  	fs.readFile(fromPath + pathname, copyData);
   })(unescape(url.parse(request.url).pathname));
   /********************************************/
 
   function copyData(err, data) {
-    err || fs.writeFile(toPath + name, data);
-    respLn(err || ["copied", name, "to", toPath].join(" "));
+    err || fs.writeFile(toPath + filename, data);
+    respLn(err || ["copied", filename, "to", toPath].join(" "));
     serveResponse(err);
   }
 
@@ -55,3 +53,5 @@ http.createServer(function (request, response) {
   }
 
 }).listen(port);
+
+console.log("awaiting instructions at localhost:8080...");
