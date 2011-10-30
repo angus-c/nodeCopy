@@ -21,21 +21,21 @@ http.createServer(function (request, response) {
     }
     //...or copy
     filename = pathname;
-    respLn("\nasked to copy", pathname, "...");
+    respNew("\nasked to copy", pathname, "...");
   	fs.readFile(fromPath + pathname, copyData);
   })(unescape(url.parse(request.url).pathname));
   /********************************************/
 
   function copyData(err, data) {
     err || fs.writeFile(toPath + filename, data);
-    respLn(err || ["copied", filename, "to", toPath].join(" "));
+    respAdd(err || ["copied", filename, "to", toPath].join(" "));
     serveResponse(err);
   }
 
   function listDirectory(err, data) {
-    fs.readdir(toPath, function(err, files) {
-      respLn("\nchoose a file to copy...\n");
-      respLn(files.join('\n'));
+    fs.readdir(fromPath, function(err, files) {
+      respNew("\nchoose a file to copy from", fromPath, "...\n");
+      respAdd(files.join('\n'));
       serveResponse(err);
     })
   }
@@ -48,8 +48,12 @@ http.createServer(function (request, response) {
     response.end();
   }
 
-  function respLn(/*arguments*/) {
+  function respAdd(/*arguments*/) {
     respContent += ("\n" + [].slice.call(arguments).join(" "));
+  }
+
+  function respNew(/*arguments*/) {
+    respContent = ("\n" + [].slice.call(arguments).join(" "));
   }
 
 }).listen(port);
