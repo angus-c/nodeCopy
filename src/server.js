@@ -21,7 +21,7 @@ http.createServer(function (request, response) {
     }
     //...or copy
     filename = pathname;
-    respNew("\nasked to copy", pathname, "...");
+    respNew("<span>asked to copy", pathname, "...</span>");
   	fs.readFile(fromPath + pathname, copyData);
   })(unescape(url.parse(request.url).pathname));
   /********************************************/
@@ -29,31 +29,34 @@ http.createServer(function (request, response) {
   function copyData(err, data) {
     err || fs.writeFile(toPath + filename, data);
     respAdd(err || ["copied", filename, "to", toPath].join(" "));
+    respAdd("<a href='/'>copy another?</a>");
     serveResponse(err);
   }
 
   function listDirectory(err, data) {
     fs.readdir(fromPath, function(err, files) {
-      respNew("\nchoose a file to copy from", fromPath, "...\n");
-      respAdd(files.join('\n'));
+      respNew("<span>Copy from", "<code>" + fromPath + "</code><br>to<code>" + toPath + "</code><br>");
+      respAdd(files.map(function(e) {
+        return ["<a href='", "/", e, "'>", e, "</a>"].join('');
+      }).join('<br>'));
       serveResponse(err);
     })
   }
 
   function serveResponse(err) {
     response.writeHead(err ? 400 : 200, {
-      "Content-Type": "text/plain"
+      "Content-Type": "text/html"
     });
     response.write(respContent);
     response.end();
   }
 
   function respAdd(/*arguments*/) {
-    respContent += ("\n" + [].slice.call(arguments).join(" "));
+    respContent += ("<br>" + [].slice.call(arguments).join(" "));
   }
 
   function respNew(/*arguments*/) {
-    respContent = ("\n" + [].slice.call(arguments).join(" "));
+    respContent = ("<br>" + [].slice.call(arguments).join(" "));
   }
 
 }).listen(port);
