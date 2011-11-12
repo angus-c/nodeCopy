@@ -13,34 +13,43 @@ http.createServer(function (request, response) {
 
   /************dispatch function**************/
   (function(pathname) {
-    if (pathname.match("favicon")) { return; }
     //list files...
     if (pathname == "/") {
-      listDirectory();
+      response.writeHead(200, {'Content-Type': 'text/html'});
+        fs.readFile("index.html", 'utf-8', function(err, content) {
+        respContent = err ||
+          mustache.to_html(content, {
+            fromPath: fromPath,
+            toPath: toPath,
+            files: fs.readdirSync(fromPath),
+          });
+        serveResponse(err);
+      });
+
+      //listDirectory();
       return;
     }
+
+    if (pathname.match(/\.css$/)) {
+      response.writeHead(200, {'Content-Type': 'text/css'});
+      var fileStream = fs.createReadStream(pathname.slice(1));
+      fileStream.pipe(response);
+      return;
+    }
+
+    if (pathname.match(/favicon/)) { return; }
     //...or copy
     filename = pathname;
     respNew("<span>asked to copy", pathname, "...</span>");
-  	fs.readFile(fromPath + pathname, copyData);
+    fs.readFile(fromPath + pathname, copyData);
   })(unescape(url.parse(request.url).pathname));
   /********************************************/
 
   function copyData(err, data) {
     err || fs.writeFile(toPath + filename, data);
-    respAdd(err || ["copied", filename, "to", toPath].join(" "));
+    respAdd(err || ["copied", filename, '('+data.length+' bytes)', "to", toPath].join(" "));
     respAdd("<a href='/'>copy another?</a>");
     serveResponse(err);
-  }
-
-  function listDirectory(err, data) {
-    fs.readdir(fromPath, function(err, files) {
-      respNew("<span>Copy from", "<code>" + fromPath + "</code><br>to<code>" + toPath + "</code><br>");
-      respAdd(files.map(function(e) {
-        return ["<a href='", "/", e, "'>", e, "</a>"].join('');
-      }).join('<br>'));
-      serveResponse(err);
-    })
   }
 
   function serveResponse(err) {

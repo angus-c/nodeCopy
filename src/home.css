@@ -1,0 +1,24 @@
+body {
+  background-color: #525252
+  ;
+}
+
+header {
+  font: 22px helvetica;
+  color: #CEF50C;
+}
+
+li {
+  list-style-type: none;
+}
+
+a {
+  color:#CEF50C;
+}
+
+input {
+ width: 600px;
+ font: 18px helvetica;
+ left: 220px;
+ display: block;
+}
