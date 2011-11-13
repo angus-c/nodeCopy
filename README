@@ -1,5 +1,9 @@
-An early attempt at a file copier. Promise to make this more useful soon
+An early attempt at a file copier using mustache and fs. Promise to make this more useful soon
+
+//required modules
+npm install mustache
 
 //usage
-1) set to and from paths in server.js
-2) goto localhost:8080 and click file to copy it
+1) goto port 8080 
+2) edit to and from paths to taste (remember trailing '/'s)
+3) click a file to copy it
