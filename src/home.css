@@ -8,8 +8,15 @@ header {
   color: #CEF50C;
 }
 
+header.message {
+  margin-top: 10px;
+  font: 22px helvetica;
+  color: #F68317;
+}
+
 li {
   list-style-type: none;
+  font: 18px helvetica;
 }
 
 a {
@@ -17,8 +24,10 @@ a {
 }
 
 input {
+
  width: 600px;
  font: 18px helvetica;
  left: 220px;
  display: block;
+ /*margin-bottom: 1em;*/
 }

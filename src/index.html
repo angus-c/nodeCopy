@@ -7,14 +7,16 @@
 	    <link rel="stylesheet" type="text/css" href="/home.css" />
 	</head>
 	<body>
-		<header class="header">Copy from <input type="text" value="{{fromPath}}"></header>
-		<header class="header">to <input type="text" value="{{toPath}}"></header>
+		<header>Copy from <input id="from" class="path" type="text" value="{{fromPath}}"></header>
+		<header>to <input id="to" class="path" type="text" value="{{toPath}}"></header>
+		<header class="message">{{message}}</header>
 		<ul>
 			{{#files}}
 				<li>
-					<a href="/{{.}}">{{.}}</a>
+					<a href="/?file={{{.}}}">/{{.}}</a>
 				</li>
 			{{/files}}
 		</ul>
+	    <script src="client.js"></script>
 	</body>
 </html>
