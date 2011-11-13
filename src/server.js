@@ -10,9 +10,10 @@ var pathQuery = /to|from/;
 var port = 8080;
 var respContent = "";
 
-var fromPath = '/Users/fred/Documents'
-var toPath = '/Users/fred/Dropbox/Documents'
-
+var data = {
+  fromPath: '/Users/fred/Documents/',
+  toPath: '/Users/fred/Dropbox/Documents/'
+}
 var filename;
 
 http.createServer(function (request, response) {
