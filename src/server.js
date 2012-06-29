@@ -1,5 +1,5 @@
 var http = require("http");
-var sys = require("sys");
+var sys = require("util");
 var url = require("url");
 var fs = require('fs');
 var mustache = require('mustache');
