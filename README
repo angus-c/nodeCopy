@@ -1,9 +1,0 @@
-An early attempt at a file copier using mustache and fs. Promise to make this more useful soon
-
-//required modules
-npm install mustache
-
-//usage
-1) goto port 8080 
-2) edit to and from paths to taste (remember trailing '/'s)
-3) click a file to copy it
